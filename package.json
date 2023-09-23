@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "name": "projetojavascript-3",
+  "description": "Igual as outros só que com CRUD",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasBernard0/projetojavascript-3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasBernard0/projetojavascript-3/issues"
+  },
+  "homepage": "https://github.com/LucasBernard0/projetojavascript-3#readme"
+}
