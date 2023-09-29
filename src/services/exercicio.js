@@ -1,31 +1,38 @@
-const RepositoryExercicio = require('../repositories/exercicio');
+const RepostiorieExercicios = require("../repositories/exercicio.js");
+const repositorie = new RepostiorieExercicios();
 
-const repositorio = new RepositoryExercicio()
+class ServiceExercicios {
+   async GetNome(id) {
+    return repositorie.GetNome(id);
+  }
 
-class ServiceExercicio {
-
-    PegarUm(index) {
-        return repositorio.PegarUm(index)
+  Add(nome) {
+    if (!nome) {
+      throw new Error("Parâmetro inválido");
     }
 
-    PegarTodos() {
-        return repositorio.PegarTodos()
+    repositorie.Add(nome);
+  }
+
+  GetNomes() {
+    return repositorie.GetNomes();
+  }
+
+  Update(nome, id) {
+    if (!nome || isNaN(id)) {
+      throw new Error("Parâmetro inválido");
     }
 
-    Adicionar(nome) {
-        if (!nome) {
-            throw new Error("FAvor preencher o nome.")
-        }
-        repositorio.Adicionar(nome)
+    repositorie.Update(nome, id);
+  }
+
+  Delete(id) {
+    if (isNaN(id)) {
+      throw new Error("Parâmetro inválido");
     }
 
-    Alterar(index, nome) {
-        if (!nome) {
-            throw new Error ("Favor preencher o nome.")
-        } else if (!index || isNaN(index)) {
-            throw new Error ("Favor corretamente o index.")
-        }
-
-        repositorio.Adicionar(nome)
-    }    
+    repositorie.Delete(id);
+  }
 }
+
+module.exports = ServiceExercicios;
