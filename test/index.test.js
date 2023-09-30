@@ -1,23 +1,17 @@
-const { describe, expect, it } = require('@jest/globals');
-const ServiceExercicios = require('../src/services/exercicio.js')
+const { describe, expect, it } = require('@jest/globals')
+const ServicoExercicio = require("../src/services/exercicio")
 
-describe('Testes dos Exercicios', () => {
-    const service = new ServiceExercicios()
+describe('Testes do primeiro exercício', () => {
+   
+   const servico = new ServicoExercicio()
 
-    beforeAll(async () => {
-        console.info('Iniciando TDD com Jest!');
-    });
+   it('Should sum two numbers', async () => {
+      const result = await servico.PegarUm(1)
+      
+      expect(result.id).toBe(1);
+      expect(result.nome).toBe('João da Silva');
+      expect(result.email).toBe('joao@example.com');
+      expect(result.senha).toBe('senha123');
+   })
 
-    afterAll(() => {
-        console.info('Testes Encerrados!');
-    });
-
-    // ============================= NOMES ============================= //
-    it('Should add a name', () => {
-        const valueBefore = service.GetNomes().length
-        service.Add("João")
-        const valueAfter = service.GetNomes().length
-
-        expect(valueAfter).toBe(valueBefore+1)
-    })
 })

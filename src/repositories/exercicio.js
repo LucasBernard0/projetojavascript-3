@@ -1,28 +1,36 @@
-const nomes = new Array("Alpha", "Beta", "Charlie");
 const Pessoa = require("../models/exercicio.js")
 
 class RepostiorieExercicios {
-   async GetNome(id) {
+   
+  async GetNome(id) {
     return Pessoa.findOne({
       where: { id }
     });
   }
-
-  Add(nome) {
-    console.log(`NOME: ${nome}`);
-    nomes.push(nome);
-  }
-
+  
   GetNomes() {
-    return nomes;
+    return Pessoa.findAll();
   }
 
-  Update(nome, id) {
-    nomes[id] = nome;
+  async Add(pessoa) {
+    console.log(pessoa)
+    return Pessoa.create(pessoa)
+  }
+  
+  async Update(id, nome, email, senha) {
+    return Pessoa.update({
+      nome,
+      senha,
+      email
+    },{
+      where: { id }
+    })
   }
 
-  Delete(id) {
-    nomes.splice(id, 1);
+  async Delete(id) {
+    return Pessoa.destroy({
+      where: { id }
+    });
   }
 }
 

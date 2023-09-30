@@ -1,8 +1,9 @@
-const ServiceExercicios = require("../services/exercicio.js");
+const ServiceExercicios = require("../services/exercicio");
+
 const service = new ServiceExercicios();
 
 class ControllerExercicios {
-   async GetNome(req, res) {
+  async GetNome(req, res) {
     try {
       const resultado = await service.GetNome(req.params.id);
       res.status(200).json({
@@ -10,67 +11,58 @@ class ControllerExercicios {
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: error,
-      });
+      res.status(500).json({ message: "Erro ao pegar nome" });
     }
   }
 
-  Add(req, res) {
+  async GetNomes(_, res) {
     try {
-      const resultado = service.Add(req.body.nome);
+      const resultado = await service.GetNomes();
       res.status(200).json({
-        nomes: resultado,
+        pessoas: resultado,
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: error,
-      });
+      res.status(500).json({ message: "Erro ao pegar nomes" });
     }
   }
 
-  GetNomes(_, res) {
+  async Add(req, res) {
     try {
-      const resultado = service.GetNomes();
+      service.Add(req.body.pessoa);
+
+      res.status(201).json({ message: "Adicionado com sucesso" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: error });
+    }
+  }
+
+  async Update(req, res) {
+    try {
+      service.Update(
+        req.params.id,
+        req.body.nome,
+        req.body.email,
+        req.body.senha
+      );
+
+      res.status(200).json({ message: "Atualizado com sucesso" });
+    } catch (error) {
+      res.status(500).json({ message: "Erro ao alterar nome" });
+    }
+  }
+
+  async Delete(req, res) {
+    try {
+      service.Delete(req.params.id);
       res.status(200).json({
-        nomes: resultado,
+        message: "Deletado com sucesso",
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: error,
-      });
-    }
-  }
-
-  Update(req, res) {
-    try {
-      const resultado = service.Update(req.body.nome, req.params.id);
-      res.status(200).json({
-        nomes: resultado,
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
-    }
-  }
-
-  Delete(req, res) {
-    try {
-      const resultado = service.Delete(req.params.id);
-      res.status(200).json({
-        nomes: resultado,
-      });
-    } catch {
-      console.log(error);
-      res.status(500).json({
-        message: error,
-      });
+      res.status(500).json({ mwssage: "Erro ao deletar nome" });
     }
   }
 }
-
 module.exports = ControllerExercicios;

@@ -1,37 +1,33 @@
-const RepostiorieExercicios = require("../repositories/exercicio.js");
+const RepostiorieExercicios = require("../repositories/exercicio");
 const repositorie = new RepostiorieExercicios();
 
 class ServiceExercicios {
-   async GetNome(id) {
+  async GetNome(id) {
     return repositorie.GetNome(id);
   }
 
-  Add(nome) {
-    if (!nome) {
-      throw new Error("Parâmetro inválido");
-    }
-
-    repositorie.Add(nome);
-  }
-
-  GetNomes() {
+  async GetNomes() {
     return repositorie.GetNomes();
   }
 
-  Update(nome, id) {
-    if (!nome || isNaN(id)) {
-      throw new Error("Parâmetro inválido");
+  async Add(pessoa) {
+    if (isNaN(id) || nome == "" || email == "" || senha == "") {
+      throw new Error("Preencha todos os campos");
     }
+    return repositorie.Add(pessoa);
+  }
 
-    repositorie.Update(nome, id);
+  Update(id, nome, email, senha) {
+    if (nome == "" || email == "" || senha == "") {
+      throw new Error("Preencha todos os campos");
+    } else if (id < 0 || isNaN(id)) {
+      throw new Error("Preencher o campo id corretamente");
+    }
+    repositorie.Update(id, nome, email, senha);
   }
 
   Delete(id) {
-    if (isNaN(id)) {
-      throw new Error("Parâmetro inválido");
-    }
-
-    repositorie.Delete(id);
+    return repositorie.Delete(id);
   }
 }
 
