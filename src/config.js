@@ -7,5 +7,6 @@ module.exports = {
         database: process.env.DATABASE_URL,
         host: process.env.HOST,
         dialect: process.env.DIALECT
-    }
+    }, 
+    secret: "MinhaChav353cr3t4",
 }

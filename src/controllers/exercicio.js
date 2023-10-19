@@ -1,8 +1,38 @@
 const ServiceExercicios = require("../services/exercicio");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 
 const service = new ServiceExercicios();
 
 class ControllerExercicios {
+
+  async Login(req, res) {
+    const { email, senha } = req.body;
+    if(!email || !senha) {
+      res.status(401).json({ message: "Email ou senha inválidos" })
+    }
+    
+    const { dataValues: pessoa } = await servico.PegarUmporEmail(email)
+
+    if(!pessoa) {
+      res.status(401).json({ message: "Email ou senha inválidos" })
+    }
+    if(!(await bcrypt.compare(senha, pessoa.senha))) {
+      res.status(401).json({ message: "Email ou senha inválidos" })
+    }
+
+    const token = jwt.sing(
+      { id: pessoa.id, email: pessoa.email, nome: pessoa.nome },
+      config.secret
+    )
+
+    res.json({
+      token: ""
+    })
+  }
+
+
   async GetNome(req, res) {
     try {
       const resultado = await service.GetNome(req.params.id);

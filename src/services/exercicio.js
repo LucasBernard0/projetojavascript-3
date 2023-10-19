@@ -6,6 +6,8 @@ class ServiceExercicios {
     return repositorie.GetNome(id);
   }
 
+  async GetEmail
+
   async GetNomes() {
     return repositorie.GetNomes();
   }
