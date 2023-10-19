@@ -1,6 +1,7 @@
-const ServiceExercicios = require("../services/exercicio");
+const ServiceExercicios = require("../services/pessoa");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const config = require("../config.js");
 
 
 const service = new ServiceExercicios();
@@ -8,16 +9,14 @@ const service = new ServiceExercicios();
 class ControllerExercicios {
 
   async Login(req, res) {
-    const { email, senha } = req.body;
-    if(!email || !senha) {
-      res.status(401).json({ message: "Email ou senha inválidos" })
-    }
+    const { email, senha } = req.body;  // mesma coisa que fazer: ( const email = req.body.email; | const senha = req.body.senha ), porém tudo em uma linha.
     
     const { dataValues: pessoa } = await servico.PegarUmporEmail(email)
 
     if(!pessoa) {
-      res.status(401).json({ message: "Email ou senha inválidos" })
+      return res.status(401).json({ message: "Email ou senha inválidos" })
     }
+    console.log(pessoa.senha, senha)
     if(!(await bcrypt.compare(senha, pessoa.senha))) {
       res.status(401).json({ message: "Email ou senha inválidos" })
     }
@@ -27,9 +26,7 @@ class ControllerExercicios {
       config.secret
     )
 
-    res.json({
-      token: ""
-    })
+    res.json({ mensagem: 'Login bem-sucedido', token });
   }
 
 

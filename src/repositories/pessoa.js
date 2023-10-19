@@ -1,4 +1,4 @@
-const Pessoa = require("../models/exercicio.js")
+const Pessoa = require("../models/pessoa.js")
 const bcrypt = require("bcrypt");
 
 
@@ -20,15 +20,12 @@ class RepostiorieExercicios {
     return Pessoa.findAll();
   }
 
-  async Add(pessoa, transaction) {
-    const hashSenha = bcrypt.hash(pessoa.senha, 10)
+  async Add(pessoa, isAdmin = false) {
+    const senha = await bcrypt.hash(pessoa.senha, 10)
 
-    const result = await Pessoa.create(
-      { ...pessoa, senha: hashSenha },
-      { transaction }
-    )
-    return Pessoa.create(pessoa)
-  }
+    return Pessoa.create({ ...pessoa, senha, permissao: isAdmin ? 0 : 1 })
+}
+
   
   async Update(id, nome, email, senha) {
     return Pessoa.update({
